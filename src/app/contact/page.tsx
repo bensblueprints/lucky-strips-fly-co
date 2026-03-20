@@ -77,7 +77,7 @@ export default function ContactPage() {
       <section className="relative pt-32 pb-20 bg-primary-900">
         <div className="absolute inset-0 z-0 opacity-20">
           <Image
-            src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=2069"
+            src="/images/river-1.jpg"
             alt="Smith River"
             fill
             className="object-cover"

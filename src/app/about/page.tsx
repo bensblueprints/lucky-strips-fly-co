@@ -68,7 +68,7 @@ export default function AboutPage() {
       <section className="relative pt-32 pb-20 bg-primary-900">
         <div className="absolute inset-0 z-0 opacity-20">
           <Image
-            src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?q=80&w=2070"
+            src="/images/river-1.jpg"
             alt="Smith River landscape"
             fill
             className="object-cover"
@@ -135,7 +135,7 @@ export default function AboutPage() {
             >
               <div className="aspect-[4/5] relative rounded-2xl overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1485452499676-62ab02571a7c?q=80&w=1974"
+                  src="/images/fish-2.jpg"
                   alt="Fly fishing guide"
                   fill
                   className="object-cover"
@@ -163,7 +163,7 @@ export default function AboutPage() {
             >
               <div className="aspect-video relative rounded-2xl overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=2069"
+                  src="/images/river-2.jpg"
                   alt="Smith River Virginia"
                   fill
                   className="object-cover"
@@ -300,7 +300,7 @@ export default function AboutPage() {
             >
               <div className="aspect-[4/3] relative rounded-2xl overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1552413538-f42b12b20b0a?q=80&w=2070"
+                  src="/images/boat-1.jpg"
                   alt="Fly fishing instruction"
                   fill
                   className="object-cover"

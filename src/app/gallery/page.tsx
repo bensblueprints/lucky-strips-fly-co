@@ -21,91 +21,91 @@ const stagger = {
   }
 };
 
-// Gallery images with placeholder Unsplash photos
+// Gallery images from Lucky Strips Fly Co
 const galleryImages = [
   {
     id: 1,
-    src: "https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?q=80&w=2070",
-    alt: "Fly fishing on the Smith River",
-    category: "fishing",
-    caption: "Early morning casting on the Smith River",
+    src: "/images/gallery-1.png",
+    alt: "Angler with brown trout",
+    category: "catches",
+    caption: "Beautiful brown trout from the Smith River",
   },
   {
     id: 2,
-    src: "https://images.unsplash.com/photo-1531218150217-54595bc2b934?q=80&w=2028",
-    alt: "Beautiful brown trout catch",
-    category: "catches",
-    caption: "Wild brown trout from the Smith River",
+    src: "/images/gallery-2.jpg",
+    alt: "Fly fishing on the Smith River",
+    category: "fishing",
+    caption: "Guided trip on the water",
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=2069",
+    src: "/images/gallery-3.jpg",
+    alt: "Happy angler with catch",
+    category: "catches",
+    caption: "Another successful day on the Smith",
+  },
+  {
+    id: 4,
+    src: "/images/gallery-4.jpg",
+    alt: "Trout catch close-up",
+    category: "catches",
+    caption: "Wild brown trout",
+  },
+  {
+    id: 5,
+    src: "/images/gallery-5.jpg",
     alt: "Smith River scenery",
     category: "scenery",
     caption: "Scenic views along the float",
   },
   {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1583375478223-1b847c4c5cdf?q=80&w=2070",
-    alt: "Sunset on the river",
-    category: "scenery",
-    caption: "Golden hour on the water",
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2026",
-    alt: "Drift boat on the river",
-    category: "fishing",
-    caption: "Our drift boat ready for the day",
-  },
-  {
     id: 6,
-    src: "https://images.unsplash.com/photo-1485452499676-62ab02571a7c?q=80&w=1974",
-    alt: "Fly fishing guide instruction",
+    src: "/images/gallery-6.jpg",
+    alt: "Drift boat fishing",
     category: "fishing",
-    caption: "Expert instruction for all skill levels",
+    caption: "Drift boat on the Smith River",
   },
   {
     id: 7,
-    src: "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?q=80&w=2070",
-    alt: "Mountain river view",
+    src: "/images/gallery-7.jpg",
+    alt: "River landscape",
     category: "scenery",
     caption: "Virginia's beautiful Smith River valley",
   },
   {
     id: 8,
-    src: "https://images.unsplash.com/photo-1552413538-f42b12b20b0a?q=80&w=2070",
-    alt: "Landing a fish",
-    category: "catches",
-    caption: "Net ready for a nice brown",
+    src: "/images/gallery-8.jpg",
+    alt: "Fly fishing action",
+    category: "fishing",
+    caption: "Tight lines on the Smith",
   },
   {
     id: 9,
-    src: "https://images.unsplash.com/photo-1517027630787-8d0c80bc2d5b?q=80&w=2070",
-    alt: "Fly selection",
-    category: "fishing",
-    caption: "Matching the hatch",
+    src: "/images/gallery-9.jpg",
+    alt: "Angler with trout",
+    category: "catches",
+    caption: "Great catch of the day",
   },
   {
     id: 10,
-    src: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=2070",
-    alt: "River rapids",
+    src: "/images/gallery-10.jpg",
+    alt: "Smith River water",
     category: "scenery",
-    caption: "Crystal clear Smith River water",
+    caption: "Crystal clear tailwater",
   },
   {
     id: 11,
-    src: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2026",
-    alt: "Happy angler with catch",
+    src: "/images/gallery-11.jpg",
+    alt: "Fish release",
     category: "catches",
-    caption: "All smiles with a beautiful trout",
+    caption: "Catch and release on the Smith",
   },
   {
     id: 12,
-    src: "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?q=80&w=2070",
-    alt: "Autumn on the river",
+    src: "/images/gallery-12.jpg",
+    alt: "River at sunset",
     category: "scenery",
-    caption: "Fall colors along the Smith",
+    caption: "Golden hour on the water",
   },
 ];
 
@@ -130,7 +130,7 @@ export default function GalleryPage() {
       <section className="relative pt-32 pb-20 bg-primary-900">
         <div className="absolute inset-0 z-0 opacity-20">
           <Image
-            src="https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?q=80&w=2070"
+            src="/images/hero.jpg"
             alt="Fly fishing scenery"
             fill
             className="object-cover"

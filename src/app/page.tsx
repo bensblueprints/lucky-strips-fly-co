@@ -101,7 +101,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center pt-16">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?q=80&w=2070"
+            src="/images/hero.jpg"
             alt="Fly fishing on the Smith River"
             fill
             className="object-cover"
@@ -314,8 +314,8 @@ export default function Home() {
             >
               <div className="aspect-[4/3] relative rounded-2xl overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1531218150217-54595bc2b934?q=80&w=2028"
-                  alt="Fly fishing guide on the Smith River"
+                  src="/images/fish-1.jpg"
+                  alt="Brown trout catch on the Smith River"
                   fill
                   className="object-cover"
                 />
@@ -423,8 +423,8 @@ export default function Home() {
       <section className="relative py-24">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1583375478223-1b847c4c5cdf?q=80&w=2070"
-            alt="Smith River at sunset"
+            src="/images/river-1.jpg"
+            alt="Smith River scenery"
             fill
             className="object-cover"
           />

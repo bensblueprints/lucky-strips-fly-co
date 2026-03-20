@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Phone, Fish } from "lucide-react";
+import Image from "next/image";
+import { Menu, X, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -21,11 +22,13 @@ export function Header() {
       <nav className="container-custom flex items-center justify-between py-4 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <Fish className="h-8 w-8 text-primary-600" />
-          <div>
-            <span className="font-display text-xl font-bold text-primary-800">Lucky Strips</span>
-            <span className="block text-xs text-gray-500 -mt-1">Fly Co.</span>
-          </div>
+          <Image
+            src="/images/logo.png"
+            alt="Lucky Strips Fly Co"
+            width={48}
+            height={48}
+            className="h-12 w-auto"
+          />
         </Link>
 
         {/* Desktop Navigation */}

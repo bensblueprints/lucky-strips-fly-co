@@ -113,7 +113,7 @@ export default function TripsPage() {
       <section className="relative pt-32 pb-20 bg-primary-900">
         <div className="absolute inset-0 z-0 opacity-20">
           <Image
-            src="https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2026"
+            src="/images/boat-1.jpg"
             alt="Drift boat on river"
             fill
             className="object-cover"

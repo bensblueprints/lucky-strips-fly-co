@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Fish, Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
+import Image from "next/image";
+import { Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
 
 export function Footer() {
   return (
@@ -9,11 +10,13 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <Fish className="h-8 w-8 text-primary-300" />
-              <div>
-                <span className="font-display text-xl font-bold">Lucky Strips</span>
-                <span className="block text-xs text-primary-300 -mt-1">Fly Co.</span>
-              </div>
+              <Image
+                src="/images/logo.png"
+                alt="Lucky Strips Fly Co"
+                width={120}
+                height={48}
+                className="h-12 w-auto brightness-0 invert"
+              />
             </Link>
             <p className="text-primary-200 text-sm leading-relaxed">
               Experience world-class fly fishing on Virginia&apos;s Smith River. Expert guided trips for anglers of all skill levels.
