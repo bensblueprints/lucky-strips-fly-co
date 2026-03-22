@@ -16,6 +16,13 @@ This skill helps you build and deploy professional fishing guide websites with b
 - **Site URL**: https://lucky-strips-flyfishing.netlify.app
 - **Site ID**: cdc5a728-977f-46c8-8a2a-5c3119c3d268
 
+## Database Info (Neon DB)
+- **Project ID**: purple-dust-08075092
+- **Connection String**: `postgresql://neondb_owner:npg_uWmpT8JMbDl2@ep-green-paper-aj7rfaoh.c-3.us-east-2.aws.neon.tech/neondb?sslmode=require`
+- **Host**: ep-green-paper-aj7rfaoh.c-3.us-east-2.aws.neon.tech
+- **Database**: neondb
+- **User**: neondb_owner
+
 ## Color Palette (Fishing Guide Theme)
 ```css
 /* Gold/Bronze - Primary accent */
