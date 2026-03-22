@@ -3,434 +3,669 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Clock,
   Users,
   CheckCircle,
-  Calendar,
-  ArrowRight,
   Phone,
   Fish,
   Sun,
   Sunrise,
-  Info,
+  MapPin,
+  Waves,
+  Target,
+  ChevronDown,
+  Mail,
+  Star,
 } from "lucide-react";
-import { cn, formatPrice } from "@/lib/utils";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  transition: { duration: 0.4, ease: "easeOut" }
 };
 
 const stagger = {
   animate: {
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.08
     }
   }
 };
 
-const trips = [
+// Smith River Trips
+const smithRiverTrips = [
   {
-    id: "half-day",
-    name: "Half Day Float Trip",
-    duration: "4.5 Hours",
-    icon: Sunrise,
-    description: "The perfect introduction to Smith River fly fishing. Ideal for beginners or those with limited time who still want a quality fishing experience.",
-    longDescription: "Our half day trips are designed to give you a taste of what the Smith River has to offer. You'll float some of the most productive water on the river while learning fly casting techniques and local fishing strategies. All gear is provided, making this the perfect trip for first-timers.",
-    pricing: [
-      { guests: 1, price: 275 },
-      { guests: 2, price: 375 },
-    ],
-    includes: [
-      "All fly fishing gear (rod, reel, line, flies)",
-      "Snacks and beverages",
-      "Expert fly fishing instruction",
-      "Drift boat float",
-      "Waders and boots (if needed)",
-    ],
-    schedule: "Morning trips start at 7:00 AM | Afternoon trips start at 1:00 PM",
-    bestFor: ["First-time fly fishers", "Families with children", "Limited schedules", "Trying something new"],
-  },
-  {
-    id: "full-day",
-    name: "Full Day Float Trip",
+    id: "smith-full-day-2",
+    name: "Full Day Trout Float Trip",
+    subtitle: "Two Person",
+    river: "Smith River",
     duration: "7-8 Hours",
     icon: Sun,
+    price: 475,
+    guests: 2,
     featured: true,
-    description: "Our most popular trip. Spend a full day on the water maximizing your fishing time and covering the best sections of the Smith River.",
-    longDescription: "The full day trip is our signature experience. You'll have time to fish multiple sections of the river, work through different hatches, and really dial in your technique. Lunch is prepared riverside, and you'll have plenty of time to explore what makes the Smith River special.",
-    pricing: [
-      { guests: 1, price: 400 },
-      { guests: 2, price: 500 },
-    ],
+    description: "Our signature experience for pairs. Spend a full day floating the pristine Smith River, targeting wild brown and rainbow trout.",
     includes: [
-      "All fly fishing gear (rod, reel, line, flies)",
-      "Full lunch prepared riverside",
-      "Snacks and beverages all day",
-      "Expert fly fishing instruction",
+      "All fly fishing gear provided",
+      "Riverside gourmet lunch",
+      "Snacks and premium beverages",
+      "Expert guide instruction",
       "Drift boat float",
-      "Waders and boots (if needed)",
-      "Photos of your trip",
+      "Waders and boots",
+      "Trip photography",
     ],
-    schedule: "Trips begin at 7:00 AM and conclude around 3:00 PM",
-    bestFor: ["Serious anglers", "Maximum fishing time", "Learning experience", "Trophy fish hunting"],
+  },
+  {
+    id: "smith-full-day-1",
+    name: "Full Day Trout Float Trip",
+    subtitle: "One Person",
+    river: "Smith River",
+    duration: "7-8 Hours",
+    icon: Sun,
+    price: 375,
+    guests: 1,
+    description: "The ultimate solo fishing experience. One-on-one time with your guide means personalized instruction and maximum fishing time.",
+    includes: [
+      "All fly fishing gear provided",
+      "Riverside gourmet lunch",
+      "Snacks and beverages",
+      "Personalized instruction",
+      "Drift boat float",
+      "Waders and boots",
+    ],
+  },
+  {
+    id: "smith-half-day-2",
+    name: "Half Day Trout Float Trip",
+    subtitle: "Two Person",
+    river: "Smith River",
+    duration: "4-5 Hours",
+    icon: Sunrise,
+    price: 375,
+    guests: 2,
+    description: "Perfect introduction to Smith River fly fishing. Ideal for beginners or those with limited time who want quality water time.",
+    includes: [
+      "All fly fishing gear provided",
+      "Snacks and beverages",
+      "Expert instruction",
+      "Drift boat float",
+      "Waders and boots",
+    ],
+  },
+  {
+    id: "smith-half-day-1",
+    name: "Half Day Trout Float Trip",
+    subtitle: "One Person",
+    river: "Smith River",
+    duration: "4-5 Hours",
+    icon: Sunrise,
+    price: 300,
+    guests: 1,
+    description: "A focused morning or afternoon session. Great for honing your skills or experiencing the river before committing to a full day.",
+    includes: [
+      "All fly fishing gear provided",
+      "Snacks and beverages",
+      "Personalized instruction",
+      "Drift boat float",
+      "Waders and boots",
+    ],
   },
 ];
 
+// New River Trips
+const newRiverTrips = [
+  {
+    id: "new-full-day-2",
+    name: "Full Day Smallmouth Trip",
+    subtitle: "Two Person",
+    river: "New River",
+    duration: "7-8 Hours",
+    icon: Sun,
+    price: 500,
+    guests: 2,
+    featured: true,
+    description: "Experience Virginia's premier smallmouth bass fishery. The New River offers incredible topwater action and hard-fighting fish.",
+    includes: [
+      "All fly fishing gear provided",
+      "Riverside lunch",
+      "Snacks and beverages",
+      "Expert guide instruction",
+      "Drift boat or raft float",
+      "Trip photography",
+    ],
+  },
+  {
+    id: "new-full-day-1",
+    name: "Full Day Smallmouth Trip",
+    subtitle: "One Person",
+    river: "New River",
+    duration: "7-8 Hours",
+    icon: Sun,
+    price: 400,
+    guests: 1,
+    description: "Solo adventure on the legendary New River. Target trophy smallmouth bass with personalized guide attention.",
+    includes: [
+      "All fly fishing gear provided",
+      "Riverside lunch",
+      "Snacks and beverages",
+      "Personalized instruction",
+      "Drift boat or raft float",
+    ],
+  },
+];
+
+const castingInstruction = {
+  id: "casting",
+  name: "Casting Instruction",
+  duration: "1 Hour",
+  icon: Target,
+  price: 75,
+  description: "Perfect your fly casting technique with one-on-one instruction. Ideal for beginners or experienced anglers looking to refine their skills.",
+  includes: [
+    "One-on-one instruction",
+    "All gear provided",
+    "Video analysis (optional)",
+    "Take-home tips sheet",
+  ],
+};
+
 const faqs = [
   {
-    question: "What should I bring?",
-    answer: "We provide all fishing gear, but you should bring sunglasses (polarized preferred), sunscreen, a hat, layered clothing appropriate for the weather, and a valid Virginia fishing license with trout stamp."
+    question: "What should I bring on my trip?",
+    answer: "We provide all fishing gear, but please bring sunglasses (polarized preferred), sunscreen, a hat, layered clothing appropriate for the weather, and a valid Virginia fishing license with trout stamp. A rain jacket is always a good idea."
   },
   {
     question: "Do I need a fishing license?",
-    answer: "Yes, you'll need a valid Virginia fishing license with a trout stamp. These can be purchased online at the Virginia Department of Wildlife Resources website."
+    answer: "Yes, you'll need a valid Virginia fishing license with a trout stamp for Smith River trips. Licenses can be purchased online at the Virginia Department of Wildlife Resources website. We can help you with this process if needed."
   },
   {
-    question: "What if it rains?",
-    answer: "We fish in light rain - sometimes the best fishing happens during overcast or rainy conditions! In the case of severe weather or unsafe conditions, we'll work with you to reschedule."
+    question: "What happens if the weather is bad?",
+    answer: "We fish in light rain - often the best fishing happens during overcast or rainy conditions! In cases of severe weather, lightning, or unsafe conditions, we'll work with you to reschedule at no additional cost."
   },
   {
-    question: "Can I keep the fish I catch?",
-    answer: "We practice catch and release to protect the wild trout population. However, certain stocked sections may allow harvest - ask your guide about current regulations."
+    question: "Can beginners book trips?",
+    answer: "Absolutely! Many of our clients are first-time fly fishers. Our guides are experienced instructors who will have you casting and catching fish in no time. We provide all gear and patient, thorough instruction."
   },
   {
     question: "What's the best time of year to fish?",
-    answer: "The Smith River fishes well year-round thanks to the cold tailwater. Spring and fall offer excellent dry fly fishing during hatches, while winter can produce some of the largest brown trout."
+    answer: "The Smith River fishes well year-round thanks to the cold tailwater from Philpott Dam. Spring and fall offer excellent dry fly fishing during hatches, while winter can produce some of the largest brown trout. Summer offers consistent fishing with terrestrial patterns."
+  },
+  {
+    question: "Can I keep the fish I catch?",
+    answer: "We practice catch and release to protect the wild trout population on the Smith River. The New River has different regulations that may allow harvest of smallmouth bass - ask your guide about current regulations."
   },
 ];
 
 export default function TripsPage() {
-  const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-primary-900">
-        <div className="absolute inset-0 z-0 opacity-20">
+      {/* Hero Section - Static for performance */}
+      <section className="relative h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
           <Image
             src="/images/boat-1.jpg"
-            alt="Drift boat on river"
+            alt="Drift boat on the Smith River"
             fill
             className="object-cover"
+            priority
           />
+          <div className="absolute inset-0 bg-gradient-to-b from-earth-900/70 via-earth-900/50 to-earth-900/80" />
         </div>
-        <div className="relative z-10 container-custom text-center text-white px-4">
+
+        <div className="relative z-10 text-center text-white px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
           >
-            <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
-              Guided Fly Fishing Trips
+            <span className="inline-block text-overline text-gold-400 mb-4">
+              Guided Fly Fishing Experiences
             </span>
-            <h1 className="heading-1 max-w-3xl mx-auto mb-6">
-              Book Your Smith River Adventure
+            <h1 className="heading-display text-white mb-6">
+              Book Your
+              <span className="block text-gold-400">Adventure</span>
             </h1>
-            <p className="text-xl text-primary-100 max-w-2xl mx-auto">
-              Choose your trip, select your date, and get ready for an unforgettable day on the water.
+            <p className="text-lg text-earth-200 max-w-2xl mx-auto mb-8">
+              World-class fly fishing on Virginia&apos;s Smith River and New River.
+              Choose your experience and create memories that last a lifetime.
             </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <a href="#smith-river" className="btn-gold">
+                <Fish className="mr-2 h-5 w-5" />
+                Smith River Trout
+              </a>
+              <a href="#new-river" className="btn-outline border-white text-white hover:bg-white hover:text-earth-900">
+                <Waves className="mr-2 h-5 w-5" />
+                New River Smallmouth
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Trip Cards */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
+      {/* Smith River Section */}
+      <section id="smith-river" className="section-padding bg-earth-100">
+        <div className="container-luxury">
           <motion.div
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.2 }}
             variants={stagger}
-            className="space-y-8"
+            className="text-center mb-12"
           >
-            {trips.map((trip) => (
+            <motion.div variants={fadeInUp} className="flex items-center justify-center gap-3 mb-4">
+              <span className="w-12 h-px bg-gold-500" />
+              <Fish className="h-5 w-5 text-gold-500" />
+              <span className="w-12 h-px bg-gold-500" />
+            </motion.div>
+            <motion.span variants={fadeInUp} className="text-overline text-gold-600">
+              Virginia&apos;s Premier Tailwater
+            </motion.span>
+            <motion.h2 variants={fadeInUp} className="heading-editorial text-earth-800 mt-2 mb-4">
+              Smith River Trout Trips
+            </motion.h2>
+            <motion.p variants={fadeInUp} className="text-earth-600 max-w-3xl mx-auto">
+              The Smith River below Philpott Dam offers year-round trout fishing in cold,
+              pristine waters. Target wild brown and rainbow trout in one of Virginia&apos;s
+              most beautiful settings.
+            </motion.p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {smithRiverTrips.map((trip, index) => (
               <motion.div
                 key={trip.id}
-                variants={fadeInUp}
-                className={cn(
-                  "bg-white rounded-2xl border-2 transition-all overflow-hidden",
-                  trip.featured ? "border-primary-500 shadow-lg" : "border-gray-200",
-                  selectedTrip === trip.id ? "ring-2 ring-primary-500 ring-offset-2" : ""
-                )}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className={`bg-white border ${trip.featured ? 'ring-2 ring-gold-500 border-gold-500' : 'border-earth-200'} hover:shadow-lg transition-shadow duration-300`}
               >
                 {trip.featured && (
-                  <div className="bg-primary-600 text-white text-center py-2 text-sm font-medium">
-                    Most Popular Choice
+                  <div className="bg-gradient-to-r from-gold-500 via-gold-400 to-gold-500 text-earth-900 text-center py-2 text-sm font-semibold tracking-wide">
+                    <Star className="inline h-4 w-4 mr-1" />
+                    Most Popular
                   </div>
                 )}
-
-                <div className="p-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Trip Info */}
-                    <div className="lg:col-span-2">
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className={cn(
-                          "p-3 rounded-xl",
-                          trip.featured ? "bg-primary-100" : "bg-gray-100"
-                        )}>
-                          <trip.icon className={cn(
-                            "h-8 w-8",
-                            trip.featured ? "text-primary-600" : "text-gray-600"
-                          )} />
-                        </div>
-                        <div>
-                          <h2 className="heading-3 text-gray-900">{trip.name}</h2>
-                          <div className="flex items-center gap-4 mt-1 text-gray-500">
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-4 w-4" />
-                              {trip.duration}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Users className="h-4 w-4" />
-                              1-2 Guests
-                            </span>
-                          </div>
-                        </div>
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <div className="flex items-center gap-2 text-gold-600 text-sm font-medium mb-1">
+                        <MapPin className="h-4 w-4" />
+                        {trip.river}
                       </div>
-
-                      <p className="text-gray-600 mb-6">{trip.longDescription}</p>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                          <h3 className="font-semibold text-gray-900 mb-3">What&apos;s Included</h3>
-                          <ul className="space-y-2">
-                            {trip.includes.map((item) => (
-                              <li key={item} className="flex items-start gap-2 text-sm text-gray-600">
-                                <CheckCircle className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5" />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-gray-900 mb-3">Best For</h3>
-                          <ul className="space-y-2">
-                            {trip.bestFor.map((item) => (
-                              <li key={item} className="flex items-start gap-2 text-sm text-gray-600">
-                                <Fish className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5" />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="mt-6 p-4 bg-gray-50 rounded-lg flex items-start gap-3">
-                        <Info className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-gray-600">
-                          <span className="font-medium text-gray-700">Schedule:</span> {trip.schedule}
-                        </div>
-                      </div>
+                      <h3 className="font-display text-xl font-medium text-earth-800">
+                        {trip.name}
+                      </h3>
+                      <p className="text-earth-500 text-sm">{trip.subtitle}</p>
                     </div>
+                    <div className={`p-2 ${trip.featured ? 'bg-gold-100' : 'bg-earth-100'}`}>
+                      <trip.icon className={`h-5 w-5 ${trip.featured ? 'text-gold-600' : 'text-earth-600'}`} />
+                    </div>
+                  </div>
 
-                    {/* Pricing & Booking */}
-                    <div className="lg:border-l lg:pl-8 lg:border-gray-200">
-                      <h3 className="font-semibold text-gray-900 mb-4">Pricing</h3>
-                      <div className="space-y-3 mb-6">
-                        {trip.pricing.map((tier) => (
-                          <div
-                            key={tier.guests}
-                            className="flex justify-between items-center p-4 bg-gray-50 rounded-lg"
-                          >
-                            <span className="text-gray-700">
-                              {tier.guests} {tier.guests === 1 ? "Person" : "People"}
-                            </span>
-                            <span className="text-2xl font-bold text-gray-900">
-                              {formatPrice(tier.price)}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+                  <div className="flex items-center gap-4 mb-4 text-earth-500 text-sm">
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-4 w-4" />
+                      {trip.duration}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Users className="h-4 w-4" />
+                      {trip.guests} {trip.guests === 1 ? 'Person' : 'People'}
+                    </span>
+                  </div>
 
-                      <div className="space-y-3">
-                        <button
-                          onClick={() => setSelectedTrip(selectedTrip === trip.id ? null : trip.id)}
-                          className={cn(
-                            "w-full py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2",
-                            trip.featured
-                              ? "bg-primary-600 text-white hover:bg-primary-700"
-                              : "bg-gray-900 text-white hover:bg-gray-800"
-                          )}
-                        >
-                          <Calendar className="h-5 w-5" />
-                          Book This Trip
-                        </button>
-                        <a
-                          href="tel:+12767320517"
-                          className="w-full py-3 px-4 rounded-lg font-medium border-2 border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
-                        >
-                          <Phone className="h-5 w-5" />
-                          Call to Book
-                        </a>
-                      </div>
+                  <p className="text-earth-600 text-sm mb-4">{trip.description}</p>
 
-                      {selectedTrip === trip.id && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="mt-6 p-4 bg-primary-50 rounded-lg border border-primary-200"
-                        >
-                          <p className="text-sm text-primary-800 mb-3">
-                            Ready to book? Contact us to check availability and reserve your trip.
-                          </p>
-                          <a
-                            href="mailto:luckystripsflyco@gmail.com?subject=Trip Booking Request"
-                            className="text-primary-600 font-medium text-sm hover:underline"
-                          >
-                            Email: luckystripsflyco@gmail.com
-                          </a>
-                        </motion.div>
+                  <div className="mb-4">
+                    <h4 className="text-xs font-semibold text-earth-700 uppercase tracking-wide mb-2">
+                      What&apos;s Included
+                    </h4>
+                    <ul className="grid grid-cols-1 gap-1">
+                      {trip.includes.slice(0, 4).map((item) => (
+                        <li key={item} className="flex items-center gap-2 text-xs text-earth-600">
+                          <CheckCircle className="h-3 w-3 text-gold-500 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                      {trip.includes.length > 4 && (
+                        <li className="text-xs text-earth-500 italic">
+                          + {trip.includes.length - 4} more included
+                        </li>
                       )}
+                    </ul>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-earth-200">
+                    <div>
+                      <span className="text-xs text-earth-500">Starting at</span>
+                      <p className="text-2xl font-display font-semibold text-earth-800">
+                        ${trip.price}
+                      </p>
                     </div>
+                    <Link
+                      href="/book"
+                      className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+                        trip.featured
+                          ? 'bg-gold-500 text-earth-900 hover:bg-gold-400'
+                          : 'bg-earth-800 text-white hover:bg-earth-700'
+                      }`}
+                    >
+                      Book Now
+                    </Link>
                   </div>
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* New River Section */}
+      <section id="new-river" className="section-padding bg-white">
+        <div className="container-luxury">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={stagger}
+            className="text-center mb-12"
+          >
+            <motion.div variants={fadeInUp} className="flex items-center justify-center gap-3 mb-4">
+              <span className="w-12 h-px bg-river-500" />
+              <Waves className="h-5 w-5 text-river-500" />
+              <span className="w-12 h-px bg-river-500" />
+            </motion.div>
+            <motion.span variants={fadeInUp} className="text-overline text-river-600">
+              World-Class Smallmouth Fishery
+            </motion.span>
+            <motion.h2 variants={fadeInUp} className="heading-editorial text-earth-800 mt-2 mb-4">
+              New River Smallmouth Trips
+            </motion.h2>
+            <motion.p variants={fadeInUp} className="text-earth-600 max-w-3xl mx-auto">
+              One of the oldest rivers in the world, the New River offers exceptional
+              smallmouth bass fishing. Experience explosive topwater action and
+              hard-fighting fish in stunning mountain scenery.
+            </motion.p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {newRiverTrips.map((trip, index) => (
+              <motion.div
+                key={trip.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className={`bg-white border ${trip.featured ? 'ring-2 ring-river-500 border-river-500' : 'border-earth-200'} hover:shadow-lg transition-shadow duration-300`}
+              >
+                {trip.featured && (
+                  <div className="bg-gradient-to-r from-river-600 via-river-500 to-river-600 text-white text-center py-2 text-sm font-semibold tracking-wide">
+                    <Star className="inline h-4 w-4 mr-1" />
+                    Best Value
+                  </div>
+                )}
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <div className="flex items-center gap-2 text-river-600 text-sm font-medium mb-1">
+                        <MapPin className="h-4 w-4" />
+                        {trip.river}
+                      </div>
+                      <h3 className="font-display text-xl font-medium text-earth-800">
+                        {trip.name}
+                      </h3>
+                      <p className="text-earth-500 text-sm">{trip.subtitle}</p>
+                    </div>
+                    <div className={`p-2 ${trip.featured ? 'bg-river-100' : 'bg-earth-100'}`}>
+                      <trip.icon className={`h-5 w-5 ${trip.featured ? 'text-river-600' : 'text-earth-600'}`} />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 mb-4 text-earth-500 text-sm">
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-4 w-4" />
+                      {trip.duration}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Users className="h-4 w-4" />
+                      {trip.guests} {trip.guests === 1 ? 'Person' : 'People'}
+                    </span>
+                  </div>
+
+                  <p className="text-earth-600 text-sm mb-4">{trip.description}</p>
+
+                  <div className="mb-4">
+                    <h4 className="text-xs font-semibold text-earth-700 uppercase tracking-wide mb-2">
+                      What&apos;s Included
+                    </h4>
+                    <ul className="grid grid-cols-1 gap-1">
+                      {trip.includes.map((item) => (
+                        <li key={item} className="flex items-center gap-2 text-xs text-earth-600">
+                          <CheckCircle className="h-3 w-3 text-river-500 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-earth-200">
+                    <div>
+                      <span className="text-xs text-earth-500">Starting at</span>
+                      <p className="text-2xl font-display font-semibold text-earth-800">
+                        ${trip.price}
+                      </p>
+                    </div>
+                    <Link
+                      href="/book"
+                      className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+                        trip.featured
+                          ? 'bg-river-600 text-white hover:bg-river-500'
+                          : 'bg-earth-800 text-white hover:bg-earth-700'
+                      }`}
+                    >
+                      Book Now
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Casting Instruction */}
+      <section className="section-padding bg-earth-800">
+        <div className="container-luxury">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="bg-earth-900/50 border border-earth-700 p-6 md:p-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div>
+                  <div className="flex items-center gap-2 text-gold-400 text-sm font-medium mb-3">
+                    <Target className="h-5 w-5" />
+                    Perfect Your Technique
+                  </div>
+                  <h3 className="font-display text-2xl font-medium text-white mb-3">
+                    Casting Instruction
+                  </h3>
+                  <p className="text-earth-300 text-sm mb-4">
+                    {castingInstruction.description}
+                  </p>
+                  <ul className="space-y-2">
+                    {castingInstruction.includes.map((item) => (
+                      <li key={item} className="flex items-center gap-2 text-earth-300 text-sm">
+                        <CheckCircle className="h-4 w-4 text-gold-500" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="text-center">
+                  <div className="inline-block bg-earth-800 p-6 border border-gold-500/30">
+                    <span className="text-earth-400 text-sm">1 Hour Session</span>
+                    <p className="text-4xl font-display font-semibold text-gold-400 my-2">
+                      ${castingInstruction.price}
+                    </p>
+                    <Link href="/book" className="btn-gold mt-3">
+                      Schedule Session
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* What to Expect */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-custom">
+      <section className="section-padding bg-earth-100">
+        <div className="container-luxury">
           <motion.div
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.2 }}
             variants={stagger}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
-            <motion.span variants={fadeInUp} className="text-primary-600 font-medium">
-              What to Expect
+            <motion.span variants={fadeInUp} className="text-overline text-gold-600">
+              Your Experience
             </motion.span>
-            <motion.h2 variants={fadeInUp} className="heading-2 text-gray-900 mt-2">
-              Your Day on the Water
+            <motion.h2 variants={fadeInUp} className="heading-section text-earth-800 mt-2">
+              What to Expect
             </motion.h2>
           </motion.div>
 
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 step: "01",
                 title: "Meet & Gear Up",
-                description: "Meet at the designated put-in location. We'll get you fitted with waders, boots, and all the fly fishing gear you need."
+                description: "Meet at the designated put-in location. We'll get you fitted with waders, boots, and all the fly fishing gear you need for the day."
               },
               {
                 step: "02",
                 title: "Learn & Fish",
-                description: "Whether you're a beginner or expert, you'll get personalized instruction as we float the river targeting trout in the best spots."
+                description: "Whether you're a beginner or expert, receive personalized instruction as we float the river targeting fish in the best spots."
               },
               {
                 step: "03",
                 title: "Memories Made",
-                description: "End the day with photos of your catches, new skills learned, and memories of an incredible day on Virginia's Smith River."
+                description: "End the day with photos of your catches, new skills learned, and memories of an incredible day on Virginia's finest waters."
               }
-            ].map((item) => (
+            ].map((item, index) => (
               <motion.div
                 key={item.step}
-                variants={fadeInUp}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-100 text-primary-600 font-bold text-xl mb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gold-500 text-earth-900 font-display text-xl font-semibold mb-4">
                   {item.step}
                 </div>
-                <h3 className="font-display text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="font-display text-lg font-medium text-earth-800 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-gray-600">{item.description}</p>
+                <p className="text-earth-600 text-sm">{item.description}</p>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* FAQs */}
       <section className="section-padding bg-white">
-        <div className="container-custom max-w-3xl">
+        <div className="container-luxury max-w-3xl">
           <motion.div
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.2 }}
             variants={stagger}
-            className="text-center mb-12"
+            className="text-center mb-10"
           >
-            <motion.span variants={fadeInUp} className="text-primary-600 font-medium">
-              FAQs
+            <motion.span variants={fadeInUp} className="text-overline text-gold-600">
+              Questions?
             </motion.span>
-            <motion.h2 variants={fadeInUp} className="heading-2 text-gray-900 mt-2">
-              Common Questions
+            <motion.h2 variants={fadeInUp} className="heading-section text-earth-800 mt-2">
+              Frequently Asked Questions
             </motion.h2>
           </motion.div>
 
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
-            className="space-y-4"
-          >
+          <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <motion.div
+              <div
                 key={index}
-                variants={fadeInUp}
-                className="border border-gray-200 rounded-lg overflow-hidden"
+                className="border border-earth-200 bg-earth-50/50"
               >
                 <button
                   onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                  className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                  className="w-full px-5 py-4 text-left flex justify-between items-center hover:bg-earth-100 transition-colors"
                 >
-                  <span className="font-medium text-gray-900">{faq.question}</span>
-                  <ArrowRight
-                    className={cn(
-                      "h-5 w-5 text-gray-400 transition-transform",
-                      expandedFaq === index ? "rotate-90" : ""
-                    )}
-                  />
+                  <span className="font-display font-medium text-earth-800 text-sm pr-4">{faq.question}</span>
+                  <ChevronDown className={`h-5 w-5 text-gold-500 flex-shrink-0 transition-transform duration-200 ${expandedFaq === index ? 'rotate-180' : ''}`} />
                 </button>
-                {expandedFaq === index && (
-                  <div className="px-6 pb-4 text-gray-600">
-                    {faq.answer}
-                  </div>
-                )}
-              </motion.div>
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-5 pb-4 text-earth-600 text-sm border-t border-earth-200 pt-3">
+                        {faq.answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="section-padding bg-primary-900 text-white">
-        <div className="container-custom text-center">
+      {/* CTA Section */}
+      <section className="section-padding bg-earth-900">
+        <div className="container-luxury text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
           >
-            <h2 className="heading-2 mb-4">Questions? We&apos;re Here to Help</h2>
-            <p className="text-primary-100 max-w-2xl mx-auto mb-8">
-              Not sure which trip is right for you? Give us a call or send an email—we&apos;re happy to help you plan the perfect fishing experience.
+            <span className="text-overline text-gold-400 mb-4 block">Ready to Fish?</span>
+            <h2 className="heading-editorial text-white mb-4">
+              Book Your Trip Today
+            </h2>
+            <p className="text-earth-300 max-w-2xl mx-auto mb-8">
+              Contact us to check availability and reserve your spot on Virginia&apos;s finest waters.
+              We&apos;re happy to help you choose the perfect trip for your experience level.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="tel:+12767320517" className="btn-accent">
-                <Phone className="mr-2 h-5 w-5 inline" />
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a href="tel:+12767320517" className="btn-gold">
+                <Phone className="mr-2 h-5 w-5" />
                 (276) 732-0517
               </a>
-              <Link href="/contact" className="btn-secondary bg-transparent border-white text-white hover:bg-white/10">
-                Send a Message
-              </Link>
+              <a
+                href="mailto:luckystripsflyco@gmail.com"
+                className="btn-outline border-gold-500 text-gold-400 hover:bg-gold-500 hover:text-earth-900"
+              >
+                <Mail className="mr-2 h-5 w-5" />
+                Email Us
+              </a>
             </div>
           </motion.div>
         </div>

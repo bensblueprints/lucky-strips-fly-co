@@ -7,69 +7,105 @@ import {
   Fish,
   Clock,
   Users,
-  Award,
   MapPin,
   Star,
   ArrowRight,
+  ArrowDown,
   CheckCircle,
   Waves,
-  Sun
+  Compass,
 } from "lucide-react";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  transition: { duration: 0.5, ease: "easeOut" },
 };
 
-const stagger = {
+const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.1
-    }
-  }
+      staggerChildren: 0.1,
+    },
+  },
 };
+
+const rivers = [
+  {
+    name: "Smith River",
+    location: "Bassett, Virginia",
+    species: "Wild Brown Trout & Rainbow Trout",
+    description:
+      "Pristine tailwater fishery below Philpott Dam. Year-round trout viability with cold, clear waters.",
+    image: "/images/hero.jpg",
+    featured: true,
+  },
+  {
+    name: "New River",
+    location: "Radford - Pearisburg, VA",
+    species: "Trophy Smallmouth Bass",
+    description:
+      "Float the nation's oldest river system chasing trophy smallmouth bass populations.",
+    image: "/images/river-1.jpg",
+  },
+];
 
 const trips = [
   {
-    name: "Half Day Trip",
-    duration: "4.5 Hours",
-    price1: 275,
-    price2: 375,
-    description: "Perfect introduction to Smith River fly fishing. All gear provided with snacks and beverages.",
-    includes: ["All fly fishing gear", "Snacks & beverages", "Expert instruction", "Drift boat included"],
+    name: "Full Day Float Trip",
+    duration: "7-8 Hours",
+    price1: 375,
+    price2: 475,
+    description:
+      "Cover more water with multiple rods rigged for various scenarios. Includes anchored boat fishing in prime holding waters.",
+    includes: [
+      "All fly fishing gear",
+      "Lunch & beverages",
+      "Expert instruction",
+      "Drift boat included",
+    ],
+    featured: true,
   },
   {
-    name: "Full Day Trip",
-    duration: "7-8 Hours",
-    price1: 400,
-    price2: 500,
-    description: "Complete Smith River experience with lunch included. Maximize your time on the water.",
-    includes: ["All fly fishing gear", "Full lunch & beverages", "Expert instruction", "Drift boat included"],
-    featured: true,
+    name: "Half Day Float Trip",
+    duration: "4.5 Hours",
+    price1: 300,
+    price2: 375,
+    description:
+      "Perfect introduction to explore local freshwater resources. All gear provided with snacks and beverages.",
+    includes: [
+      "All fly fishing gear",
+      "Snacks & beverages",
+      "Expert instruction",
+      "Drift boat included",
+    ],
   },
 ];
 
 const features = [
   {
     icon: Fish,
-    title: "Wild Brown Trout",
-    description: "The Smith River is home to a thriving wild brown trout population alongside stocked rainbow and brook trout."
+    title: "Wild Trout Waters",
+    description:
+      "The Smith River sustains a thriving wild brown trout population alongside stocked rainbow and brook trout.",
   },
   {
     icon: Waves,
     title: "Year-Round Fishing",
-    description: "Cold tailwater conditions from Philpott Dam maintain ideal temperatures for trout fishing all year."
+    description:
+      "Cold tailwater conditions from Philpott Dam maintain ideal temperatures for trout fishing all year.",
   },
   {
-    icon: Award,
-    title: "Expert Guide",
-    description: "Local expertise from a guide born and raised on the Smith River with years of fly fishing experience."
+    icon: Compass,
+    title: "Local Expertise",
+    description:
+      "Born and raised on the Smith River with decades of fly fishing experience on these waters.",
   },
   {
     icon: Users,
     title: "All Skill Levels",
-    description: "Whether you're a beginner or experienced angler, our trips are tailored to your skill level."
+    description:
+      "Whether you're casting for the first time or an experienced angler, trips are tailored to your level.",
   },
 ];
 
@@ -97,8 +133,9 @@ const testimonials = [
 export default function Home() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-16">
+      {/* Hero Section - Static background for performance */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Static Background */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/hero.jpg"
@@ -107,189 +144,299 @@ export default function Home() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+          {/* Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-b from-earth-950/70 via-earth-900/50 to-earth-950/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-forest-900/30 via-transparent to-river-900/30" />
         </div>
 
-        <div className="relative z-10 container-custom text-center text-white px-4">
+        {/* Hero Content */}
+        <div className="relative z-20 container-luxury text-center text-white px-6 pt-24">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
-              Smith River, Virginia
-            </span>
-            <h1 className="heading-1 max-w-4xl mx-auto mb-6">
-              Experience World-Class Fly Fishing on Virginia&apos;s Smith River
+            {/* Overline */}
+            <div className="inline-flex items-center gap-3 mb-8">
+              <span className="w-12 h-px bg-gradient-to-r from-transparent to-gold-400" />
+              <span className="text-overline text-gold-400">
+                Smith River & New River, Virginia
+              </span>
+              <span className="w-12 h-px bg-gradient-to-l from-transparent to-gold-400" />
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="heading-display text-white max-w-5xl mx-auto mb-8">
+              Experience{" "}
+              <span className="text-gradient-gold font-semibold italic">
+                World-Class
+              </span>{" "}
+              Fly Fishing
             </h1>
-            <p className="text-xl text-gray-200 max-w-2xl mx-auto mb-8">
-              Join us for an unforgettable guided fly fishing adventure. Expert instruction, premium gear, and access to Virginia&apos;s premier tailwater fishery.
+
+            {/* Subheadline */}
+            <p className="text-xl md:text-2xl text-earth-200 max-w-3xl mx-auto mb-12 leading-relaxed font-light">
+              Guided fly fishing adventures on Virginia&apos;s premier tailwater fisheries.
+              Wild brown trout, trophy smallmouth, and unforgettable days on the water.
             </p>
+
+            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/trips" className="btn-primary text-lg px-8 py-4">
-                Book Your Trip
-                <ArrowRight className="ml-2 h-5 w-5 inline" />
+              <Link href="/trips" className="btn-gold text-lg group">
+                Book Your Adventure
+                <ArrowRight className="ml-2 h-5 w-5 inline transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link href="/about" className="btn-secondary bg-transparent border-white text-white hover:bg-white/10 text-lg px-8 py-4">
+              <Link
+                href="/about"
+                className="btn-outline border-white/30 text-white hover:bg-white hover:text-earth-900 text-lg"
+              >
                 Meet Your Guide
               </Link>
             </div>
           </motion.div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        >
+          <div className="flex flex-col items-center gap-2 text-white/60 animate-bounce">
+            <span className="text-xs tracking-ultra-wide uppercase">Explore</span>
+            <ArrowDown className="h-5 w-5" />
+          </div>
+        </motion.div>
+
+        {/* Decorative Corner Elements */}
+        <div className="absolute top-32 left-8 w-24 h-24 border-l-2 border-t-2 border-gold-500/20 z-10" />
+        <div className="absolute bottom-32 right-8 w-24 h-24 border-r-2 border-b-2 border-gold-500/20 z-10" />
+      </section>
+
+      {/* Rivers Overview Section */}
+      <section className="section-padding bg-earth-100">
+        <div className="container-luxury">
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="text-white/70"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
+            className="text-center mb-16"
           >
-            <ArrowRight className="h-6 w-6 rotate-90" />
+            <motion.span variants={fadeInUp} className="text-overline">
+              Two Premier Fisheries
+            </motion.span>
+            <motion.h2
+              variants={fadeInUp}
+              className="heading-editorial text-earth-900 mt-4"
+            >
+              Virginia&apos;s Finest Waters
+            </motion.h2>
+            <motion.div variants={fadeInUp} className="gold-line-center mt-6" />
           </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {rivers.map((river, index) => (
+              <motion.div
+                key={river.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group relative overflow-hidden"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={river.image}
+                    alt={river.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-earth-950/90 via-earth-950/40 to-transparent" />
+
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
+                    <div className="flex items-center gap-2 text-gold-400 text-sm mb-3">
+                      <MapPin className="h-4 w-4" />
+                      {river.location}
+                    </div>
+                    <h3 className="font-display text-2xl md:text-3xl text-white font-medium mb-2">
+                      {river.name}
+                    </h3>
+                    <p className="text-gold-300 font-medium mb-3">
+                      {river.species}
+                    </p>
+                    <p className="text-earth-200 text-sm leading-relaxed max-w-lg">
+                      {river.description}
+                    </p>
+                    <Link
+                      href="/trips"
+                      className="inline-flex items-center gap-2 text-gold-400 hover:text-gold-300 mt-4 font-medium transition-colors group/link"
+                    >
+                      View Trips
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+                    </Link>
+                  </div>
+
+                  {/* Decorative Border */}
+                  <div className="absolute inset-3 border border-white/10 pointer-events-none" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
       <section className="section-padding bg-white">
-        <div className="container-custom">
+        <div className="container-luxury">
           <motion.div
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
             className="text-center mb-16"
           >
-            <motion.span
-              variants={fadeInUp}
-              className="text-primary-600 font-medium"
-            >
+            <motion.span variants={fadeInUp} className="text-overline">
               Why Fish With Us
             </motion.span>
             <motion.h2
               variants={fadeInUp}
-              className="heading-2 text-gray-900 mt-2"
+              className="heading-editorial text-earth-900 mt-4"
             >
-              The Smith River Experience
+              The Lucky Strips Difference
             </motion.h2>
+            <motion.div variants={fadeInUp} className="gold-line-center mt-6" />
           </motion.div>
 
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-          >
-            {features.map((feature) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                variants={fadeInUp}
-                className="text-center p-6 rounded-2xl bg-gray-50 hover:bg-primary-50 transition-colors"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="group text-center p-6 bg-earth-50 border border-earth-200/50 hover:border-gold-500/30 hover:bg-gold-50/50 transition-all duration-300"
               >
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary-100 text-primary-600 mb-4">
-                  <feature.icon className="h-7 w-7" />
+                <div className="inline-flex items-center justify-center w-14 h-14 mb-5 border-2 border-gold-500/30 group-hover:border-gold-500 group-hover:bg-gold-500 transition-all duration-300">
+                  <feature.icon className="h-6 w-6 text-gold-600 group-hover:text-white transition-colors duration-300" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="font-display text-lg font-medium text-earth-900 mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-earth-600 text-sm leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Trips Section */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-custom">
+      <section className="section-padding bg-earth-900 text-white">
+        <div className="container-luxury">
           <motion.div
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
             className="text-center mb-16"
           >
-            <motion.span
-              variants={fadeInUp}
-              className="text-primary-600 font-medium"
-            >
-              Our Guided Trips
+            <motion.span variants={fadeInUp} className="text-overline text-gold-400">
+              Guided Adventures
             </motion.span>
             <motion.h2
               variants={fadeInUp}
-              className="heading-2 text-gray-900 mt-2"
+              className="heading-editorial text-white mt-4"
             >
-              Choose Your Adventure
+              Choose Your Trip
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="text-gray-600 mt-4 max-w-2xl mx-auto"
+              className="text-earth-300 mt-6 max-w-2xl mx-auto"
             >
-              All trips include expert instruction, premium fly fishing gear, and a drift boat experience on the beautiful Smith River.
+              All trips include expert instruction, premium fly fishing gear, and
+              a drift boat experience on Virginia&apos;s finest waters.
             </motion.p>
           </motion.div>
 
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
-          >
-            {trips.map((trip) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {trips.map((trip, index) => (
               <motion.div
                 key={trip.name}
-                variants={fadeInUp}
-                className={`relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow ${
-                  trip.featured ? "ring-2 ring-primary-500" : ""
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className={`relative bg-earth-800/50 backdrop-blur border border-earth-700 p-6 hover:border-gold-500/50 transition-all duration-300 ${
+                  trip.featured ? "ring-1 ring-gold-500/30" : ""
                 }`}
               >
                 {trip.featured && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary-600 text-white text-xs font-semibold rounded-full">
-                    Most Popular
-                  </span>
+                  <div className="absolute -top-px left-0 right-0 h-1 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-500" />
                 )}
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-primary-100 rounded-lg">
-                    <Sun className="h-5 w-5 text-primary-600" />
-                  </div>
+
+                <div className="flex items-start justify-between mb-5">
                   <div>
-                    <h3 className="font-display text-xl font-semibold text-gray-900">
+                    <h3 className="font-display text-xl text-white mb-1">
                       {trip.name}
                     </h3>
-                    <span className="text-sm text-gray-500 flex items-center gap-1">
-                      <Clock className="h-3.5 w-3.5" />
+                    <span className="flex items-center gap-2 text-gold-400 text-sm">
+                      <Clock className="h-4 w-4" />
                       {trip.duration}
                     </span>
                   </div>
+                  {trip.featured && (
+                    <span className="px-2 py-1 bg-gold-500 text-earth-900 text-xs font-semibold tracking-wide">
+                      POPULAR
+                    </span>
+                  )}
                 </div>
-                <p className="text-gray-600 text-sm mb-6">{trip.description}</p>
+
+                <p className="text-earth-300 text-sm mb-5 leading-relaxed">
+                  {trip.description}
+                </p>
+
                 <ul className="space-y-2 mb-6">
                   {trip.includes.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-gray-700">
-                      <CheckCircle className="h-4 w-4 text-primary-500 flex-shrink-0" />
+                    <li
+                      key={item}
+                      className="flex items-center gap-2 text-sm text-earth-200"
+                    >
+                      <CheckCircle className="h-4 w-4 text-gold-500 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
                 </ul>
-                <div className="border-t pt-6">
-                  <div className="flex justify-between items-end mb-4">
+
+                <div className="border-t border-earth-700 pt-5">
+                  <div className="flex justify-between items-end mb-5">
                     <div>
-                      <span className="text-sm text-gray-500">1 Person</span>
-                      <p className="text-2xl font-bold text-gray-900">${trip.price1}</p>
+                      <span className="text-earth-500 text-xs uppercase tracking-wide">
+                        1 Person
+                      </span>
+                      <p className="text-2xl font-display text-white">
+                        ${trip.price1}
+                      </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-sm text-gray-500">2 People</span>
-                      <p className="text-2xl font-bold text-gray-900">${trip.price2}</p>
+                      <span className="text-earth-500 text-xs uppercase tracking-wide">
+                        2 People
+                      </span>
+                      <p className="text-2xl font-display text-white">
+                        ${trip.price2}
+                      </p>
                     </div>
                   </div>
                   <Link
-                    href="/trips"
-                    className={`w-full inline-block text-center py-3 rounded-lg font-medium transition-colors ${
+                    href="/book"
+                    className={`w-full text-center block py-3 font-semibold tracking-wide transition-all duration-300 ${
                       trip.featured
-                        ? "bg-primary-600 text-white hover:bg-primary-700"
-                        : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                        ? "bg-gold-500 text-earth-900 hover:bg-gold-400"
+                        : "bg-earth-700 text-white hover:bg-gold-500 hover:text-earth-900"
                     }`}
                   >
                     Book Now
@@ -297,130 +444,86 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
-        </div>
-      </section>
+          </div>
 
-      {/* About Preview */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative"
+          <div className="text-center mt-10">
+            <Link
+              href="/trips"
+              className="inline-flex items-center gap-2 text-gold-400 hover:text-gold-300 font-medium transition-colors"
             >
-              <div className="aspect-[4/3] relative rounded-2xl overflow-hidden">
-                <Image
-                  src="/images/fish-1.jpg"
-                  alt="Brown trout catch on the Smith River"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-6 -right-6 bg-primary-600 text-white p-6 rounded-xl shadow-lg hidden md:block">
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5" />
-                  <span className="font-medium">Born & Raised</span>
-                </div>
-                <p className="text-sm text-primary-100 mt-1">Smith River, VA</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <span className="text-primary-600 font-medium">Your Guide</span>
-              <h2 className="heading-2 text-gray-900 mt-2 mb-6">
-                Local Expertise, Lifelong Passion
-              </h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                Born and raised on the Smith River in Bassett, Virginia, your guide brings a lifetime of local knowledge and a deep passion for fly fishing to every trip.
-              </p>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Currently a Biology/Ecology Teacher and Baseball Coach, he blends teaching and coaching qualities into fly fishing instruction, making every trip both educational and enjoyable.
-              </p>
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="text-2xl font-bold text-primary-600">20+</p>
-                  <p className="text-sm text-gray-600">Years on the Smith</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="text-2xl font-bold text-primary-600">100%</p>
-                  <p className="text-sm text-gray-600">Customer Satisfaction</p>
-                </div>
-              </div>
-              <Link href="/about" className="btn-primary">
-                Learn More About Us
-                <ArrowRight className="ml-2 h-5 w-5 inline" />
-              </Link>
-            </motion.div>
+              View All Trip Options
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="section-padding bg-primary-900 text-white">
-        <div className="container-custom">
+      <section className="section-padding bg-earth-100">
+        <div className="container-luxury">
           <motion.div
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
             className="text-center mb-16"
           >
-            <motion.span
-              variants={fadeInUp}
-              className="text-primary-300 font-medium"
-            >
-              Testimonials
+            <motion.span variants={fadeInUp} className="text-overline">
+              Client Stories
             </motion.span>
             <motion.h2
               variants={fadeInUp}
-              className="heading-2 mt-2"
+              className="heading-editorial text-earth-900 mt-4"
             >
-              What Our Guests Say
+              What Anglers Say
             </motion.h2>
+            <motion.div variants={fadeInUp} className="gold-line-center mt-6" />
           </motion.div>
 
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            {testimonials.map((testimonial) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
-                variants={fadeInUp}
-                className="bg-primary-800/50 backdrop-blur-sm rounded-2xl p-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="bg-white p-6 border border-earth-200 hover:border-gold-500/30 hover:shadow-md transition-all duration-300"
               >
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-accent-400 text-accent-400" />
+                    <Star
+                      key={i}
+                      className="h-4 w-4 fill-gold-400 text-gold-400"
+                    />
                   ))}
                 </div>
-                <p className="text-primary-100 leading-relaxed mb-6">
+                <p className="text-earth-700 leading-relaxed mb-5 italic text-sm">
                   &ldquo;{testimonial.text}&rdquo;
                 </p>
-                <div>
-                  <p className="font-semibold">{testimonial.name}</p>
-                  <p className="text-sm text-primary-300">{testimonial.location}</p>
+                <div className="flex items-center gap-3 pt-4 border-t border-earth-200">
+                  <div className="w-9 h-9 bg-gold-500/10 rounded-full flex items-center justify-center">
+                    <span className="text-gold-600 font-semibold text-sm">
+                      {testimonial.name.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-earth-900 text-sm">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-xs text-earth-500">
+                      {testimonial.location}
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-24">
+      <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/river-1.jpg"
@@ -428,27 +531,31 @@ export default function Home() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-primary-900/80" />
+          <div className="absolute inset-0 bg-earth-950/85" />
         </div>
 
-        <div className="relative z-10 container-custom text-center text-white px-4">
+        <div className="relative z-10 container-luxury text-center text-white px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}
           >
-            <h2 className="heading-2 mb-6">Ready to Hit the Water?</h2>
-            <p className="text-xl text-primary-100 max-w-2xl mx-auto mb-8">
-              Book your guided fly fishing trip on the Smith River today. Limited availability, so reserve your spot now!
+            <span className="text-overline text-gold-400 mb-4 block">
+              Your Adventure Awaits
+            </span>
+            <h2 className="heading-editorial mb-6">Ready to Hit the Water?</h2>
+            <p className="text-lg text-earth-200 max-w-2xl mx-auto mb-8 leading-relaxed">
+              Book your guided fly fishing trip on the Smith River or New River
+              today. Limited availability, so reserve your spot now.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/trips" className="btn-accent text-lg px-8 py-4">
+              <Link href="/book" className="btn-gold text-lg">
                 Book Your Trip
               </Link>
               <a
                 href="tel:+12767320517"
-                className="btn-secondary bg-transparent border-white text-white hover:bg-white/10 text-lg px-8 py-4"
+                className="btn-outline border-white/30 text-white hover:bg-white hover:text-earth-900 text-lg"
               >
                 Call (276) 732-0517
               </a>
